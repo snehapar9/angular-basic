@@ -10,6 +10,15 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Cache NPM dependencies
+        uses: actions/cache@v3
+        with:
+         path: |
+           .npm
+           node_modules
+         key: ${{ runner.OS }}-npm2-cache-${{ hashFiles('**/package-lock.json') }}
+         restore-keys: |
+          ${{ runner.OS }}-npm2-cache-
       - name: Oryx build step
         uses: snehapar9/jamstacktest-composite-action-private-image@snehapar/oryx-build
         id: oryx-build
